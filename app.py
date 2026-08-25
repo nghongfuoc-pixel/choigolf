@@ -7,10 +7,10 @@ import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 
-# ============ TẢI MODEL VÀ CONFIG (chỉ chạy 1 lần, cache lại) ============
+
 @st.cache_resource
 def load_model_and_config():
-       model = tf.keras.models.load_model("golf_swing_mobilenetv2.keras", safe_mode=False)
+    model = tf.keras.models.load_model("golf_swing_mobilenetv2.keras", safe_mode=False)
 
     with open("class_names.json", "r", encoding="utf-8") as f:
         class_names = json.load(f)
@@ -55,7 +55,6 @@ def extract_frames(video_path, num_frames, img_size):
     return np.array(frames, dtype=np.uint8)
 
 
-# ============ GIAO DIỆN ỨNG DỤNG ============
 st.set_page_config(page_title="Nhận diện video Golf Swing", page_icon="🏌️")
 st.title("🏌️ Nhận diện video Golf Swing")
 st.write("Upload 1 video ngắn để kiểm tra xem đây có phải cảnh đánh golf hay không.")
@@ -67,7 +66,6 @@ IMG_SIZE = config["IMG_SIZE"]
 uploaded_file = st.file_uploader("Chọn file video (.avi, .mp4, .mov)", type=["avi", "mp4", "mov"])
 
 if uploaded_file is not None:
-    # Lưu file tạm để OpenCV đọc được (OpenCV cần đường dẫn file, không đọc trực tiếp từ bytes)
     with tempfile.NamedTemporaryFile(delete=False, suffix="." + uploaded_file.name.split(".")[-1]) as tmp_file:
         tmp_file.write(uploaded_file.read())
         tmp_path = tmp_file.name
