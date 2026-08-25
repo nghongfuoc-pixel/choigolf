@@ -10,7 +10,7 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 # ============ TẢI MODEL VÀ CONFIG (chỉ chạy 1 lần, cache lại) ============
 @st.cache_resource
 def load_model_and_config():
-    model = tf.keras.models.load_model("golf_swing_mobilenetv2.keras")
+       model = tf.keras.models.load_model("golf_swing_mobilenetv2.keras", safe_mode=False)
 
     with open("class_names.json", "r", encoding="utf-8") as f:
         class_names = json.load(f)
